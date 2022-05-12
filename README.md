@@ -4,7 +4,7 @@
 Você pode assistir os vídeos deste curso no site https://www.youtube.com/channel/UCoqYHkQy8q5nEMv1gkcZgSw/featured.
 
 ### Sumário
-Neste curso vamos unir a popularidade dos Microsserviços e criar uma Loja Virtual a partir dos ensinamentos do Jose Carlos Macoratti.
+Neste curso vamos unir a popularidade dos Microsserviços e criar uma Loja Virtual a partir dos ensinamentos do Jose Carlos Macoratti. Os vídeos são postados toda segunda feira e ainda não foram finalizados.
 
 ### Conteúdo Programático
 * Aula 01 - https://www.youtube.com/watch?v=jap8tXIAMi4
