@@ -10,3 +10,4 @@ Neste curso vamos unir a popularidade dos Microsserviços e criar uma Loja Virtu
 * Aula 01 - https://www.youtube.com/watch?v=jap8tXIAMi4
 * Aula 02 - https://www.youtube.com/watch?v=fyQGEp_LQyo
 * Aula 03 - https://www.youtube.com/watch?v=iwCaEJYKIds
+* Aula 04 - https://www.youtube.com/watch?v=Gu8apzH4uvc

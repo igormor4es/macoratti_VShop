@@ -15,6 +15,7 @@ public class AppDbContext : DbContext
         //Category
         mb.Entity<Category>().HasKey(p => p.CategoryId);
         mb.Entity<Category>().Property(p => p.Name).HasMaxLength(100).IsRequired();
+        mb.Entity<Category>().HasData(new Category { CategoryId = 1, Name = "Material Escolar" }, new Category { CategoryId = 2, Name = "Acessórios" });
 
         //Product
         mb.Entity<Product>().Property(p => p.Name).HasMaxLength(100).IsRequired();
@@ -22,6 +23,5 @@ public class AppDbContext : DbContext
         mb.Entity<Product>().Property(p => p.ImageURL).HasMaxLength(255).IsRequired();
         mb.Entity<Product>().Property(p => p.Price).HasPrecision(18, 2);
         mb.Entity<Category>().HasMany(p => p.Products).WithOne(x => x.Category).IsRequired().OnDelete(DeleteBehavior.NoAction);
-        mb.Entity<Category>().HasData( new Category { CategoryId = 1, Name = "Material Escolar" }, new Category { CategoryId = 2, Name = "Acessórios" });
     }
 }
