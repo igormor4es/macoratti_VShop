@@ -9,8 +9,8 @@ namespace VShop.Web.Services;
 public class ProductService : IProductService
 {
     private readonly IHttpClientFactory _clientFactory;
-    private const string apiEndpoint = "/api/Products/";
     private readonly JsonSerializerOptions _options;
+    private const string apiEndpoint = "/api/products/";
     private ProductViewModel productVM;
     private IEnumerable<ProductViewModel> productsVM;
 
@@ -30,7 +30,8 @@ public class ProductService : IProductService
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadAsStreamAsync();
-                productsVM = await JsonSerializer.DeserializeAsync<IEnumerable<ProductViewModel>>(apiResponse, _options);
+                productsVM = await JsonSerializer
+                            .DeserializeAsync<IEnumerable<ProductViewModel>>(apiResponse, _options);
             }
             else
             {
@@ -39,6 +40,8 @@ public class ProductService : IProductService
         }
         return productsVM;
     }
+
+   
 
     public async Task<ProductViewModel> FindProductById(int id, string token)
     {
@@ -50,10 +53,12 @@ public class ProductService : IProductService
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadAsStreamAsync();
-                productVM = await JsonSerializer.DeserializeAsync<ProductViewModel>(apiResponse, _options);
+                productVM = await JsonSerializer
+                          .DeserializeAsync<ProductViewModel>(apiResponse, _options);
             }
             else
             {
+                //throw new HttpRequestException(response.ReasonPhrase);
                 return null;
             }
         }
@@ -65,18 +70,21 @@ public class ProductService : IProductService
         var client = _clientFactory.CreateClient("ProductApi");
         PutTokenInHeaderAuthorization(token, client);
 
-        StringContent content = new StringContent(JsonSerializer.Serialize(productVM), Encoding.UTF8, "application/json");
+        StringContent content = new StringContent(JsonSerializer.Serialize(productVM),
+                                                  Encoding.UTF8, "application/json");
 
         using (var response = await client.PostAsync(apiEndpoint, content))
         {
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadAsStreamAsync();
-                productVM = await JsonSerializer.DeserializeAsync<ProductViewModel>(apiResponse, _options);
+                productVM = await JsonSerializer
+                           .DeserializeAsync<ProductViewModel>(apiResponse, _options);
             }
             else
             {
                 return null;
+                //throw new HttpRequestException(response.ReasonPhrase);
             }
         }
         return productVM;
@@ -86,22 +94,24 @@ public class ProductService : IProductService
     {
         var client = _clientFactory.CreateClient("ProductApi");
         PutTokenInHeaderAuthorization(token, client);
-        ProductViewModel productUpdated = new();
 
+        ProductViewModel productUpdated = new ProductViewModel();
+        
         using (var response = await client.PutAsJsonAsync(apiEndpoint, productVM))
         {
             if (response.IsSuccessStatusCode)
             {
                 var apiResponse = await response.Content.ReadAsStreamAsync();
-                productUpdated = await JsonSerializer.DeserializeAsync<ProductViewModel>(apiResponse, _options);
+                productUpdated = await JsonSerializer
+                                  .DeserializeAsync<ProductViewModel>(apiResponse, _options);
             }
             else
             {
                 return null;
+                //throw new HttpRequestException(response.ReasonPhrase);
             }
         }
         return productUpdated;
-
     }
 
     public async Task<bool> DeleteProductById(int id, string token)
@@ -113,6 +123,7 @@ public class ProductService : IProductService
         {
             if (response.IsSuccessStatusCode)
             {
+                //var apiResponse = await response.Content.ReadAsStreamAsync();
                 return true;
             }
         }
@@ -121,6 +132,7 @@ public class ProductService : IProductService
 
     private static void PutTokenInHeaderAuthorization(string token, HttpClient client)
     {
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        client.DefaultRequestHeaders.Authorization =
+                   new AuthenticationHeaderValue("Bearer", token);
     }
 }

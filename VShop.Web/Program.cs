@@ -56,6 +56,22 @@ builder.Services.AddAuthentication(options =>
     }
 );
 
+builder.Services.AddHttpClient<IProductService, ProductService>("ProductApi", c =>
+{
+    c.BaseAddress = new Uri(builder.Configuration["ServiceUri:ProductApi"]);
+    c.DefaultRequestHeaders.Add("Connection", "Keep-Alive");
+    c.DefaultRequestHeaders.Add("Keep-Alive", "3600");
+    c.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory-ProductApi");
+});
+
+builder.Services.AddHttpClient<ICartService, CartService>("CartApi",
+    c => c.BaseAddress = new Uri(builder.Configuration["ServiceUri:CartApi"])
+);
+
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -68,7 +84,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthentication();
